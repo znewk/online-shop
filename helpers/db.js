@@ -11,3 +11,25 @@ const pool = new Pool({
         rejectUnauthorized: false
     },
 })
+
+exports.getTours = function(request, response){
+    pool.query("select * from tours", function(error, response){
+        if(error){
+            console.log(error);
+        }
+        response.render("tours.hbs", {
+            toursArray: results.rows
+        });
+    });
+}
+exports.aboutTour = function(request, response){
+    let tourId = request.body.tourId;
+    pool.query("select * from tours where id = $1",[tourId], function(error, response){
+        if(error){
+            console.log(error);
+        }
+        response.render("aboutTour.hbs", {
+            toursArray: results.rows[0]
+        });
+    });
+}
