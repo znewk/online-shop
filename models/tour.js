@@ -1,10 +1,10 @@
 let toursArray = [];
 
 module.exports = class Tour {
-    constructor(name, description, price){
+    constructor(name, price, data){
         this.name = name;
-        this.description = description;
         this.price = price;
+        this.data = data
     }
     save() {
         tousArray.push(this);

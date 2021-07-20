@@ -1,4 +1,5 @@
 const express = require('express');
+const tourRouter = require("./routes/tourRouter");
 const TelegramBot = require("node-telegram-bot-api");
 const bodyParser = require('body-parser')
 
@@ -8,6 +9,7 @@ const bot = new TelegramBot(token, { polling: true });
 const app = express()
 
 app.set("view engine", "hbs");
+app.use("/tours", tourRouter);
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))

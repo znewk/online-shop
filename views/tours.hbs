@@ -11,8 +11,9 @@
 
     {{#each toursArray }}
         Название : {{this.name}} <br>
-        Описание : {{this.description}} <br>
-        Стоимость : {{this.price}} <br>
+        <a href="/aboutTour.hbs">Цена: {{this.price}} KZT</a> <br>
+        На {{this.data}} дней<br>
+        
         <hr>
     {{/each}}
 </body>
