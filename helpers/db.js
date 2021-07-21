@@ -1,5 +1,9 @@
 let pg = require("pg")
- 
+const TelegramBot = require("node-telegram-bot-api");
+
+const token = '1897548081:AAF2kHQiOXVhJqZk_LV9CjQbDEPokjVt0H8';
+const bot = new TelegramBot(token, { polling: false });
+
 const Pool = pg.Pool
 const pool = new Pool({
     user: 'cjzzbfxyksjfrh',
@@ -12,24 +16,67 @@ const pool = new Pool({
     },
 })
 
-exports.getTours = function(request, response){
-    pool.query("select * from tours", function(error, response){
-        if(error){
+exports.getTours = function(request, response) {
+    pool.query("select * from tours", function(error, toursResult) {
+        if (error) {
             console.log(error);
         }
-        response.render("tours.hbs", {
-            toursArray: results.rows
+        pool.query("select * from hotels", function(error, hotelsResult) {
+            if (error) {
+                console.log(error);
+            }
+            pool.query("select * from hotels_photos", function(error, hotelsPhotosResult) {
+                if (error) {
+                    console.log(error);
+                }
+                console.log("TOURS: " + toursResult.rows);
+                console.log("HOTELS: " + hotelsResult.rows);
+                console.log("HOTELS PHOTOS: " + hotelsPhotosResult.rows);
+
+                response.render('tours.hbs', {
+                    tours: toursResult.rows,
+                    hotels: hotelsResult.rows,
+                    hotelsPhotos: hotelsPhotosResult.rows
+                })
+            });
         });
     });
 }
-exports.aboutTour = function(request, response){
+exports.aboutTour = function(request, response) {
     let tourId = request.body.tourId;
-    pool.query("select * from tours where id = $1",[tourId], function(error, response){
-        if(error){
+    pool.query("select * from tours where id = $1", [tourId], function(error, results) {
+        if (error) {
             console.log(error);
         }
-        response.render("aboutTour.hbs", {
-            toursArray: results.rows[0]
-        });
+        if (results.rows[0].length != 0) {
+
+        }
     });
+}
+
+exports.registerAdminTB = function(userName, chatID) {
+
+    pool.query("select * from tg_admins where chat_id = $1", [chatID], function(error, results) {
+        if (error) {
+            console.log(error);
+        }
+        console.log('NEW MESSAGE')
+        console.log("RESULTS: " + JSON.stringify(results.rows[0]))
+
+        if (results.rows[0] === undefined) {
+            pool.query("INSERT INTO tg_admins (user_name, chat_id) VALUES($1, $2)", [userName, chatID], function(error, results) {
+                if (error) {
+                    console.log(error);
+                }
+                console.log('TRUE')
+                bot.sendMessage(chatID, 'Вы успешно зарегистрированы!')
+            })
+        } else {
+            console.log('FALSE')
+            bot.sendMessage(chatID, 'Пользователь уже был зарегистрирован!')
+
+        }
+    });
+
+
 }
