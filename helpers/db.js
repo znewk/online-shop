@@ -16,24 +16,25 @@ const pool = new Pool({
     },
 })
 
-exports.getTours = function(request, response) {
-    pool.query("select * from tours", function(error, toursResult) {
+exports.getTours = function (request, response) {
+    pool.query("select * from tours", function (error, toursResult) {
         if (error) {
             console.log(error);
         }
-        pool.query("select * from hotels", function(error, hotelsResult) {
+        pool.query('SELECT hotels.id, hotels.name as "hotel_name", countries.id as "country_id", cities.id as "city_id", stars, description, countries.name as "country_name", cities.name as "city_name" \n FROM public.hotels \n join countries on countries.id = hotels.country_id \n join cities on cities.id = hotels.city_id', function (error, hotelsResult) {
             if (error) {
                 console.log(error);
             }
-            pool.query("select * from hotels_photos", function(error, hotelsPhotosResult) {
+            pool.query("select * from hotels_photos", function (error, hotelsPhotosResult) {
                 if (error) {
                     console.log(error);
                 }
+
                 console.log("TOURS: " + toursResult.rows);
                 console.log("HOTELS: " + hotelsResult.rows);
                 console.log("HOTELS PHOTOS: " + hotelsPhotosResult.rows);
 
-                response.render('tours.hbs', {
+                response.render('tours.ejs', {
                     tours: toursResult.rows,
                     hotels: hotelsResult.rows,
                     hotelsPhotos: hotelsPhotosResult.rows
@@ -42,9 +43,9 @@ exports.getTours = function(request, response) {
         });
     });
 }
-exports.aboutTour = function(request, response) {
+exports.aboutTour = function (request, response) {
     let tourId = request.body.tourId;
-    pool.query("select * from tours where id = $1", [tourId], function(error, results) {
+    pool.query("select * from tours where id = $1", [tourId], function (error, results) {
         if (error) {
             console.log(error);
         }
@@ -54,9 +55,9 @@ exports.aboutTour = function(request, response) {
     });
 }
 
-exports.registerAdminTB = function(userName, chatID) {
+exports.registerAdminTB = function (userName, chatID) {
 
-    pool.query("select * from tg_admins where chat_id = $1", [chatID], function(error, results) {
+    pool.query("select * from tg_admins where chat_id = $1", [chatID], function (error, results) {
         if (error) {
             console.log(error);
         }
@@ -64,7 +65,7 @@ exports.registerAdminTB = function(userName, chatID) {
         console.log("RESULTS: " + JSON.stringify(results.rows[0]))
 
         if (results.rows[0] === undefined) {
-            pool.query("INSERT INTO tg_admins (user_name, chat_id) VALUES($1, $2)", [userName, chatID], function(error, results) {
+            pool.query("INSERT INTO tg_admins (user_name, chat_id) VALUES($1, $2)", [userName, chatID], function (error, results) {
                 if (error) {
                     console.log(error);
                 }

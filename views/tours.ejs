@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Туры - Ardin</title>
+    <link rel="icon" href="/images/favicon.png" type="image/png">
+
+    <link rel="stylesheet" href="/css/tours.css">
+</head>
+
+<body>
+    <h1>Список туров</h1>
+
+    <% for( let i = 0; i < hotels.length; i++ ) { %>
+        
+        <div class="hotel">
+            <!-- <div class="hotel_img_block">
+                {{#each hotelsPhotos }}
+                    {{#if ../this.id === this.hotel_id }}
+                        <img src="{{this.img_src}}" alt="">
+                      
+                    {{/if}}
+                {{/each}}
+            </div> -->
+            <div class="hotel_info">
+                <span> <%= hotels[i].hotel_name %> </span> <br>
+                <span><%= hotels[i].country_name %>, <%= hotels[i].city_name %></span> <br> <br>
+
+                <span>Количество туров: 
+                    <% for( let j = 0; j < tours.length; j++ ) { %>
+                        <% if (tours[j].hotel_id === hotels[i].id) { %>
+                            <%= tours[j].price %> 
+                        <% } %>
+                    <% } %>
+                </span>
+                <hr>
+            </div>
+        </div>
+
+    <% } %>
+
+    
+
+</body>
+
+<script>
+    console.log('PAGE IS LOADED')
+    console.log("Hotels array: " )
+</script>
+
+</html>

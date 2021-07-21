@@ -14,28 +14,9 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
 
-// hbs <<
-app.set("view engine", "hbs");
-hbs.registerPartials(__dirname + "/views/partials");
+// ejs <<
 
-hbs.registerHelper('switch', function(value, options) {
-    this.switch_value = value;
-    this.switch_break = false;
-    return options.fn(this);
-});
-
-hbs.registerHelper('case', function(value, options) {
-    if (value == this.switch_value) {
-        this.switch_break = true;
-        return options.fn(this);
-    }
-});
-
-hbs.registerHelper('default', function(value, options) {
-    if (this.switch_break == false) {
-        return value;
-    }
-});
+app.set("view engine", "ejs");
 
 // hbs >>
 
