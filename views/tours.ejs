@@ -29,13 +29,7 @@
                 <span> <%= hotels[i].hotel_name %> </span> <br>
                 <span><%= hotels[i].country_name %>, <%= hotels[i].city_name %></span> <br> <br>
 
-                <span>Количество туров: 
-                    <% for( let j = 0; j < tours.length; j++ ) { %>
-                        <% if (tours[j].hotel_id === hotels[i].id) { %>
-                            <%= tours[j].price %> 
-                        <% } %>
-                    <% } %>
-                </span>
+                <span>Цена тура: <%= hotels[i].price %> </span>
                 <hr>
             </div>
         </div>

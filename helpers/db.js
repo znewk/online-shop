@@ -21,7 +21,7 @@ exports.getTours = function (request, response) {
         if (error) {
             console.log(error);
         }
-        pool.query('SELECT hotels.id, hotels.name as "hotel_name", countries.id as "country_id", cities.id as "city_id", stars, description, countries.name as "country_name", cities.name as "city_name" \n FROM public.hotels \n join countries on countries.id = hotels.country_id \n join cities on cities.id = hotels.city_id', function (error, hotelsResult) {
+        pool.query('SELECT hotels.id, hotels.name as "hotel_name", countries.id as "country_id", cities.id as "city_id", stars, description, countries.name as "country_name", cities.name as "city_name", tours.price as "price" FROM public.hotels join countries on countries.id = hotels.country_id join cities on cities.id = hotels.city_id join tours on hotels.id = tours.hotel_id order by tours.price', function (error, hotelsResult) {
             if (error) {
                 console.log(error);
             }
