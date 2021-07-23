@@ -45,12 +45,12 @@ exports.getTours = function(request, response) {
 }
 exports.aboutTour = function(request, response) {
     let tourId = request.body.tourId;
-    pool.query("select * from tours where id = $1", [tourId], function(error, results) {
+    pool.query('select tours.id, hotels.name as "hotel_name", description, tours.price as "price", tours.tours_count as "count", hotels.priview_img as "img", tours.departure_city_name as "city_departure", tours.departure_country_name as "country_departure",tours.destination_city_name as "city_destination",tours.destination_country_name as "country_destination" FROM public.tours join hotels on hotels.id = tours.hotel_id where tours.id =1 $1', [tourId], function(error, results) {
         if (error) {
             console.log(error);
         }
         if (results.rows[0].length != 0) {
-
+            response.status(200).json(result.rows[0])
         }
     });
 }
