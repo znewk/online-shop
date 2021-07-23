@@ -16,16 +16,16 @@ const pool = new Pool({
     },
 })
 
-exports.getTours = function (request, response) {
-    pool.query("select * from tours", function (error, toursResult) {
+exports.getTours = function(request, response) {
+    pool.query("select * from tours", function(error, toursResult) {
         if (error) {
             console.log(error);
         }
-        pool.query('SELECT hotels.id, hotels.name as "hotel_name", countries.id as "country_id", cities.id as "city_id", stars, description, countries.name as "country_name", cities.name as "city_name", tours.price as "price" FROM public.hotels join countries on countries.id = hotels.country_id join cities on cities.id = hotels.city_id join tours on hotels.id = tours.hotel_id order by tours.price', function (error, hotelsResult) {
+        pool.query('SELECT hotels.id, hotels.name as "hotel_name", countries.id as "country_id", cities.id as "city_id", stars, description, countries.name as "country_name", cities.name as "city_name", tours.price as "price", tours.tours_count as "count", hotels.priview_img as "img" FROM public.hotels  join countries on countries.id = hotels.country_id join cities on cities.id = hotels.city_id join tours on hotels.id = tours.hotel_id order by tours.price', function(error, hotelsResult) {
             if (error) {
                 console.log(error);
             }
-            pool.query("select * from hotels_photos", function (error, hotelsPhotosResult) {
+            pool.query("select * from hotels_photos", function(error, hotelsPhotosResult) {
                 if (error) {
                     console.log(error);
                 }
@@ -43,9 +43,9 @@ exports.getTours = function (request, response) {
         });
     });
 }
-exports.aboutTour = function (request, response) {
+exports.aboutTour = function(request, response) {
     let tourId = request.body.tourId;
-    pool.query("select * from tours where id = $1", [tourId], function (error, results) {
+    pool.query("select * from tours where id = $1", [tourId], function(error, results) {
         if (error) {
             console.log(error);
         }
@@ -55,9 +55,9 @@ exports.aboutTour = function (request, response) {
     });
 }
 
-exports.registerAdminTB = function (userName, chatID) {
+exports.registerAdminTB = function(userName, chatID) {
 
-    pool.query("select * from tg_admins where chat_id = $1", [chatID], function (error, results) {
+    pool.query("select * from tg_admins where chat_id = $1", [chatID], function(error, results) {
         if (error) {
             console.log(error);
         }
@@ -65,7 +65,7 @@ exports.registerAdminTB = function (userName, chatID) {
         console.log("RESULTS: " + JSON.stringify(results.rows[0]))
 
         if (results.rows[0] === undefined) {
-            pool.query("INSERT INTO tg_admins (user_name, chat_id) VALUES($1, $2)", [userName, chatID], function (error, results) {
+            pool.query("INSERT INTO tg_admins (user_name, chat_id) VALUES($1, $2)", [userName, chatID], function(error, results) {
                 if (error) {
                     console.log(error);
                 }

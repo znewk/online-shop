@@ -10,35 +10,88 @@
 
     <link rel="stylesheet" href="/css/tours.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Tourney:wght@200&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tourney:wght@200&display=swap" rel="stylesheet">
 </head>
 
 <body>
     <div id="tours">
         <h1>Tour list</h1>
 
-        <% for( let i = 0; i < hotels.length; i++ ) { %>
-        
-            <div class="hotel">
-                <!-- <div class="hotel_img_block">
-                    {{#each hotelsPhotos }}
-                        {{#if ../this.id === this.hotel_id }}
-                            <img src="{{this.img_src}}" alt="">
-                      
-                        {{/if}}
-                    {{/each}}
-                </div> -->
-                <div class="hotel_info">
-                    <span> <%= hotels[i].hotel_name %> </span> <br>
-                    <span><%= hotels[i].country_name %>, <%= hotels[i].city_name %></span> <br> <br>
-
-                    <span>Цена тура: <%= hotels[i].price %> </span>
-                    <hr>
-                </div>
+        <div class="contentbody">
+            <div class="filterBody">
+                <span class="title">Фильтр</span>
             </div>
 
-        <% } %>
+            <div class="tours">
+                <div>
+                    <span class="title">Все туры</span>
+                </div>
+
+                <% for( let i = 0; i < hotels.length; i++ ) { %>
+
+                    <div class="hotel">
+                        <div class="hotel_img_block" style="background-image: url('<%= hotels[i].img %>')">
+                        </div>
+                        <div class="hotel_info">
+                            <div class="hotelTitleBody">
+                                <div>
+                                    <div style="display: flex; align-items: center;">
+                                        <span class="hotel_title"> <%= hotels[i].hotel_name %> </span>
+                                        <span class="stars">
+                                            <% for( let s = 0; s < hotels[i].stars; s++ ) { %>
+                                                <!-- ★ -->
+                                                <img src="/images/star.png" style="height: 12px; margin: 0 1.5px;" alt="">
+                                            <% } %>
+                                        </span>
+                                    </div>
+                                    <span class="hotel_geo"><%= hotels[i].country_name %>, <%= hotels[i].city_name %></span> <br> <br>
+                                </div>
+                                <div>
+
+                                </div>
+                            </div>
+
+                            <span class="hotel_desc">
+                                <%= hotels[i].description %> 
+                            </span> <br> <br>
+                            <div class="hotel_tour_list">
+                                <span class="hotel_lists_item">
+                                    Вылет: <br>
+                                    <b style="font-size: 14px;"> Алматы </b>
+                                </span>
+                                <span class="hotel_lists_item">
+                                    Питание: <br>
+                                    <b style="font-size: 14px;"> ALL </b>
+                                </span>
+                                <span class="hotel_lists_item">
+                                    Дней: <br>
+                                    <b style="font-size: 14px;"> 7 </b>
+                                </span>
+                            </div>
+
+                            <!-- <div>
+                                <span class="signup_button">
+                                    <div class="signup_button_first">
+                                        <span>Цена за 1 человека</span> <br>
+                                <span><%= hotels[i].price %> </span>
+                                </span>
+                            </div> -->
+                        </div>
+                    </div>
+                    <% } %>
+
+            </div>
+        </div>
+    </div>
+
+
+    </div>
+
+    </div>
+
+
+
 
     </div>
 
@@ -46,7 +99,7 @@
 
 <script>
     console.log('PAGE IS LOADED')
-    console.log("Hotels array: " )
+    console.log("Hotels array: ")
 </script>
 
 </html>
