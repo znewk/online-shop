@@ -9,34 +9,38 @@
     <link rel="icon" href="/images/favicon.png" type="image/png">
 
     <link rel="stylesheet" href="/css/tours.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tourney:wght@200&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    <h1>Список туров</h1>
+    <div id="tours">
+        <h1>Tour list</h1>
 
-    <% for( let i = 0; i < hotels.length; i++ ) { %>
+        <% for( let i = 0; i < hotels.length; i++ ) { %>
         
-        <div class="hotel">
-            <!-- <div class="hotel_img_block">
-                {{#each hotelsPhotos }}
-                    {{#if ../this.id === this.hotel_id }}
-                        <img src="{{this.img_src}}" alt="">
+            <div class="hotel">
+                <!-- <div class="hotel_img_block">
+                    {{#each hotelsPhotos }}
+                        {{#if ../this.id === this.hotel_id }}
+                            <img src="{{this.img_src}}" alt="">
                       
-                    {{/if}}
-                {{/each}}
-            </div> -->
-            <div class="hotel_info">
-                <span> <%= hotels[i].hotel_name %> </span> <br>
-                <span><%= hotels[i].country_name %>, <%= hotels[i].city_name %></span> <br> <br>
+                        {{/if}}
+                    {{/each}}
+                </div> -->
+                <div class="hotel_info">
+                    <span> <%= hotels[i].hotel_name %> </span> <br>
+                    <span><%= hotels[i].country_name %>, <%= hotels[i].city_name %></span> <br> <br>
 
-                <span>Цена тура: <%= hotels[i].price %> </span>
-                <hr>
+                    <span>Цена тура: <%= hotels[i].price %> </span>
+                    <hr>
+                </div>
             </div>
-        </div>
 
-    <% } %>
+        <% } %>
 
-    
+    </div>
 
 </body>
 
