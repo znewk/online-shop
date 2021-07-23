@@ -15,6 +15,13 @@
 </head>
 
 <body>
+    <div class="modalBody">
+        <div class="modal">
+            <div>
+
+            </div>
+        </div>
+    </div>
     <div id="tours">
         <h1>Tour list</h1>
 
@@ -47,8 +54,15 @@
                                     </div>
                                     <span class="hotel_geo"><%= hotels[i].country_name %>, <%= hotels[i].city_name %></span> <br> <br>
                                 </div>
-                                <div>
-
+                                <div class="hotel_button">
+                                    <div class="hotel_btn_top">
+                                        <span style="color: white; font-size: 10px">Цена за 1 человека</span> <br>
+                                        <span style="font-weight: bold; color: white;"> <%= hotels[i].price %> KZT</span>
+                                    </div>
+                                    <div class="hotel_btn_bottom">
+                                        <span style="font-size: 10px">Цена за 1 человека</span> <br>
+                                        <span style="font-weight: bold;"> <%= (hotels[i].price*2) %> KZT</span>
+                                    </div>
                                 </div>
                             </div>
 
